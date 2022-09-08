@@ -4,15 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import br.com.ruan.petshop.model.Pet;
@@ -61,6 +56,7 @@ public class PetController {
     }
 
     @PostMapping("/new")
+    @ResponseBody
     public ResponseEntity<Pet> create(@RequestBody Pet pet){
         if(pet.getId() == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id do pet é inválido, id = null");

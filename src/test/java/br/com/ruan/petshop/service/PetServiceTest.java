@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class PetServiceTest {
@@ -75,15 +77,19 @@ public class PetServiceTest {
         pet.setDono("Ruan");
         Mockito.when(petService.save(pet)).thenReturn(pet);
 
-        String contet = objectMapper.writer().writeValueAsString(pet);
+        String content = objectMapper.writer().writeValueAsString(pet);
 
         MockHttpServletRequestBuilder mockRequest = MockMvcRequestBuilders
                 .post("/api/v1/pet/new")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .content(contet);
+                .content(content);
 
-        mockMvc.perform(mockRequest).andExpect(status().isOk());
+        mockMvc.perform(mockRequest)
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(jsonPath("$").value(notNullValue()))
+                .andExpect(jsonPath("$.nome").value("Ruan"));
     }
 
     private List<Pet> pets() {
