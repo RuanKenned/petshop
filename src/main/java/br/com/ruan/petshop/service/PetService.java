@@ -11,8 +11,13 @@ import br.com.ruan.petshop.repository.PetRepository;
 
 @Service
 public class PetService {
+
+    private PetRepository petRepository;
+
     @Autowired
-    PetRepository petRepository;
+    public PetService (PetRepository petRepository){
+        this.petRepository = petRepository;
+    }
 
     public Optional<Pet> findById(Long id){
         return petRepository.findById(id);

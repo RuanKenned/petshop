@@ -50,7 +50,7 @@ public class PetController {
         }
     }
 
-    @PutMapping("/")
+    @PutMapping("/upd")
     public ResponseEntity<Pet> update(@RequestBody Pet pet){
         if(pet.getId() == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id do pet é inválido, id = null");
@@ -60,7 +60,7 @@ public class PetController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping("/new")
     public ResponseEntity<Pet> create(@RequestBody Pet pet){
         if(pet.getId() == null){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Id do pet é inválido, id = null");
